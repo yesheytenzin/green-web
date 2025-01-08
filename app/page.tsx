@@ -8,6 +8,7 @@ const App = () => {
       <h4>this is my first project</h4>
       <h2>new update</h2>
       <h3>this is change ing</h3>
+      <h2>this second changes</h2>
     </div>
   )
 }
