@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { signInSchema } from "./zod";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -10,13 +11,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       authorize: async (credentials) => {
-        const email = "test@gmail.com";
-        const password = "1234";
+        try {
+          const validCredentials = signInSchema.parse(credentials);
 
-        if (credentials.email === email && credentials.password === password) {
-          return { email, password };
-        } else {
-          throw new Error("Invalid credentials");
+          const users = {
+            email: "test@gmail.com",
+            password: "1234",
+          };
+
+          if (
+            validCredentials.email === users.email &&
+            validCredentials.password === users.password
+          ) {
+            return { email: users.email, password: users.password };
+          } else {
+            throw new Error("Invalid credentials");
+          }
+        } catch {
+          throw new Error("invalid credentials");
         }
       },
     }),

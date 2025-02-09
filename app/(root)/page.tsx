@@ -10,7 +10,7 @@ const page = async () => {
   return (
     <>
       <h1>welcome to the home page</h1>
-      <h2></h2>
+      <h2>${session?.user?.email}</h2>
       <SignOut />
     </>
   );
